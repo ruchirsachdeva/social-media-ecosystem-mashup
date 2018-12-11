@@ -1,0 +1,30 @@
+<agm-map [latitude]="DEFAULT_MAP_LAT" [longitude]="DEFAULT_MAP_LNG" [zoom]="DEFAULT_MAP_ZOOM" [disableDefaultUI]="false"
+         [zoomControl]="true" (mapClick)="mapClicked($event)" (mapDblClick)="mapDblClicked($event)">
+
+  <agm-marker *ngFor="let marker of markers; let i = index"
+              (markerClick)="clickedMarker(marker.title, i)"
+              [latitude]="marker.lat"
+              [longitude]="marker.lng"
+              [title]="marker.title"
+              [visible]="true"
+              [markerDraggable]="marker.draggable"
+              (dragEnd)="markerDragEnd(marker, $event)">
+
+    <agm-info-window>
+      <img src="{{marker.img}}" alt="flickr img">
+    </agm-info-window>
+  </agm-marker>
+
+
+
+  <agm-circle *ngIf="circle" [latitude]="circle.lat" [longitude]="circle.lng"
+              [radius]="500"
+              [fillColor]="'red'"
+              [circleDraggable]="true"
+              [editable]="true"
+              (dragEnd)="test($event)"
+              (centerChange)="test($event)"
+              (radiusChange)="test($event)">
+  </agm-circle>
+
+</agm-map>

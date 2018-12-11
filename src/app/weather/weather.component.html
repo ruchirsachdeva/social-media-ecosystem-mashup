@@ -1,0 +1,7 @@
+<div id="page-left-weather-forecast-wrapper">
+  <div *ngFor="let forecast of forecasts" class="page-left-weather-forecast-day-wrapper">
+    <h3>{{forecast.day}}</h3>
+    <img src="{{forecast.icon}}">
+    <p>{{forecast.description}}</p>
+  </div>
+</div>

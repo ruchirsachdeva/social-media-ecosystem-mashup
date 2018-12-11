@@ -1,0 +1,8 @@
+<h2>Wikipedia results</h2>
+<ul class="scrollableClass">
+  <li *ngFor="let hero of searchResult">
+    <h3>{{hero.title}}</h3>
+    <div class="blog-post" [innerHtml]="hero.snippet"></div>
+
+  </li>
+</ul>
