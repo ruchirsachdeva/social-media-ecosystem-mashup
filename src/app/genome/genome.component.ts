@@ -8,7 +8,7 @@ import {GenomicAnalysis} from "../model/api";
   styleUrls: ['./genome.component.scss']
 })
 export class GenomeComponent implements OnInit {
-  private genomicAnalyses: GenomicAnalysis[] = [];
+  public genomicAnalyses: GenomicAnalysis[] = [];
 
   constructor(public genomeService: GenomeService) { }
 
