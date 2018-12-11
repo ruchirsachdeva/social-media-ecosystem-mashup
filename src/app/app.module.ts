@@ -10,6 +10,8 @@ import { CareerComponent } from './career/career.component';
 import { CareerResultComponent } from './career/career-result/career-result.component';
 import { WikipediaComponent } from './wikipedia/wikipedia/wikipedia.component';
 import {EmbedVideo} from "ngx-embed-video/dist";
+import { VideoComponent } from './video/video/video.component';
+import { SafePipePipe } from './pipe/safe-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {EmbedVideo} from "ngx-embed-video/dist";
     WeatherComponent,
     CareerComponent,
     CareerResultComponent,
-    WikipediaComponent
+    WikipediaComponent,
+    VideoComponent,
+    SafePipePipe
   ],
   imports: [
     BrowserModule,
