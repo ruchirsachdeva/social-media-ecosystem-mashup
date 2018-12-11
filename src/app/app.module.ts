@@ -9,6 +9,7 @@ import { WeatherComponent } from './weather/weather.component';
 import { CareerComponent } from './career/career.component';
 import { CareerResultComponent } from './career/career-result/career-result.component';
 import { WikipediaComponent } from './wikipedia/wikipedia/wikipedia.component';
+import {EmbedVideo} from "ngx-embed-video/dist";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { WikipediaComponent } from './wikipedia/wikipedia/wikipedia.component';
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDs0WJS-0UQ8F3N-8qhxyPXDniFVmS0uHQ'
-    })
+    }),
+    EmbedVideo.forRoot()
   ],
   providers: [],
   entryComponents: [CareerResultComponent],

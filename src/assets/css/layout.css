@@ -6,9 +6,11 @@
 }
 
 #page-bottom-wrapper {
-	position: relative;
+	position: absolute;
 	bottom: 0px;
-	width: 100%;
+  left: 375px;
+  top: 675px;
+	width: 50%;
 }
 
 #page-left-wrapper {
