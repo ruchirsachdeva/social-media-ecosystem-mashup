@@ -26,3 +26,16 @@ export interface Search {
   snippet; string
 }
 
+export interface Marker {
+  lat: number;
+  lng: number;
+  title?: string;
+  img?: string;
+  draggable: boolean;
+}
+
+export interface Circle {
+  lat: number;
+  lng: number;
+}
+

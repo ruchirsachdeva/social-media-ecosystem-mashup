@@ -17,14 +17,4 @@
 
 
 
-  <agm-circle *ngIf="circle" [latitude]="circle.lat" [longitude]="circle.lng"
-              [radius]="500"
-              [fillColor]="'red'"
-              [circleDraggable]="true"
-              [editable]="true"
-              (dragEnd)="test($event)"
-              (centerChange)="test($event)"
-              (radiusChange)="test($event)">
-  </agm-circle>
-
 </agm-map>

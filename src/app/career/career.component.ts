@@ -16,7 +16,7 @@ export class CareerComponent implements OnInit {
   noResult: boolean = false;
   latitude: number;
   longitude: number;
-  venues: Venue[];
+  city: string;
   jobsFound = false;
 
   constructor(public careerService: CareerService,
@@ -29,7 +29,7 @@ export class CareerComponent implements OnInit {
   setLocation($event) {
     this.latitude = $event.lat;
     this.longitude = $event.lng;
-    this.venues = $event.venues;
+    this.city = $event.city;
 
   }
 
@@ -42,23 +42,15 @@ export class CareerComponent implements OnInit {
 
     const title = input.value || input.placeholder;
 
-
-    for (var venue of this.venues) {
-      if (this.jobsFound || this.cmpArray.length > 0) {
-        break;
-      }
-      if (venue.location.city && !(this.jobsFound && this.cmpArray.length > 0)) {
-        this.careerService.getJobs(title, venue.location.city)
-          .subscribe((response) => {
-              if (response['jobs'] && this.cmpArray.length == 0) {
-                this.jobsFound = true;
-                this.onSearchResultsComplete(response);
-              }
-            },
-            error => console.error(error)
-          );
-      }
-    }
+    this.careerService.getJobs(title, this.city)
+      .subscribe((response) => {
+          if (response['jobs'] && this.cmpArray.length == 0) {
+            this.jobsFound = true;
+            this.onSearchResultsComplete(response);
+          }
+        },
+        error => console.error(error)
+      );
 
 
   }

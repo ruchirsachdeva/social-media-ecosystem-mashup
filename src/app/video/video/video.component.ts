@@ -8,13 +8,35 @@ import {VideoService} from "../../services/video.service";
 })
 export class VideoComponent implements OnInit {
 
-  urls: string[]= [];
+  urls: string[] = [];
 
-  constructor(private videoService: VideoService) { }
+  constructor(private videoService: VideoService) {
+  }
 
   ngOnInit() {
-    console.log(this.videoService.getVideos(1,2));
-    this.urls.push('https://www.youtube.com/embed/Ez2GeaMa4c8');
+    this.videoService.getVideos(28.6472799, 76.8130667, 12)
+      .subscribe(
+        data => {
+          for (var item of data['items']) {
+            this.urls.push('https://www.youtube.com/embed/' + item.id.videoId);
+          }
+        },
+        err => console.error(err)
+      );
+  }
+
+
+  getVideos($event) {
+    this.urls=[];
+    this.videoService.getVideos($event.lat, $event.lng, 12)
+      .subscribe(
+        data => {
+          for (var item of data['items']) {
+            this.urls.push('https://www.youtube.com/embed/' + item.id.videoId);
+          }
+        },
+        err => console.error(err)
+      );
   }
 
 }

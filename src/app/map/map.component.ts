@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, EventEmitter, Output} from '@angular/core'
 import {FlickrService} from '../services/flickr.service';
 import {MouseEvent, AgmCircle} from '@agm/core';
 import {FourSquareService} from "../services/foursquare.service";
-import {ForsquareData} from "../model/api";
+import {ForsquareData, Marker, Circle} from "../model/api";
 
 @Component({
   selector: 'app-map',
@@ -19,8 +19,8 @@ export class MapComponent implements OnInit {
 
   @Output() mapEvent = new EventEmitter();
 
-  markers: marker[] = [];
-  circle: circle = null;
+  markers: Marker[] = [];
+  circle: Circle = null;
 
   preventSingleClick = false;
   timer: any;
@@ -37,7 +37,7 @@ export class MapComponent implements OnInit {
   initMapWithFlickr(lat: number, lng: number) {
     this.circle = null;
     this.markers = [];
-    //TODO get city name and load lat, lng marker.
+    //TODO get city name and load lat, lng Marker.
     lng = lng || 14.8092744;
     lat = lat || 56.8770413;
     const args: Object = {lat: lat, lon: lng, radius: 4, per_page: 10, has_geo: true};
@@ -51,19 +51,40 @@ export class MapComponent implements OnInit {
         },
         error => console.error(error)
       );
+    this.emitMapEvent(lat, lng, false);
 
-    this.mapService.getCity(lat,lng).subscribe(
+
+  }
+
+  private emitMapEvent(lat: number, lng: number, isCircle: boolean) {
+    this.mapService.getCity(lat, lng).subscribe(
       data => {
-        this.mapEvent.emit({
-          lat: lat,
-          lng: lng,
-          venues: (<ForsquareData>data).response.venues
-        });
+
+        if (isCircle) {
+          this.circle = {
+            lat: lat,
+            lng: lng
+          };
+          this.markers = [];
+        }
+
+        for (var venue of (<ForsquareData>data).response.venues) {
+          if (venue.location.city) {
+            this.mapEvent.emit({
+              lat: lat,
+              lng: lng,
+              city: venue.location.city
+            });
+            if (!isCircle) {
+              this.pushMarker(lat, lng, venue.location.city, venue.location.city);
+            }
+            break;
+          }
+        }
+
       },
       err => console.error(err)
     );
-
-
   }
 
   getLocationFromPhotos(item, id) {
@@ -75,30 +96,19 @@ export class MapComponent implements OnInit {
       );
   }
 
+
   appendToMap(item, geoInfo) {
     const lati = Number(geoInfo.photo.location.latitude);
     const langi = Number(geoInfo.photo.location.longitude);
     const imgSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_q.jpg';
-
-    this.markers.push({
-      lat: lati,
-      lng: langi,
-      title: item.title,
-      img: imgSrc,
-      draggable: true
-    });
+    this.pushMarker(lati, langi, item.title, imgSrc);
   }
+
 
   clickedMarker(label: string, index: number) {
     console.log(`clicked the marker: ${label || index}`)
   }
 
-  test($event: MouseEvent) {
-    console.log(this.child.latitude);
-    console.log(this.child.longitude);
-    console.log(this.child.radius);
-    console.log(this.child.getBounds())
-  }
 
   mapClicked($event: MouseEvent) {
     this.preventSingleClick = false;
@@ -112,38 +122,28 @@ export class MapComponent implements OnInit {
   }
 
   mapDblClicked($event: MouseEvent) {
-    console.log(this.child);
     this.preventSingleClick = true;
     clearTimeout(this.timer);
-    this.circle = {
-      lat: $event.coords.lat,
-      lng: $event.coords.lng
-    };
-    this.markers=[];
   }
 
 
+  markerDragEnd(m: Marker, $event: MouseEvent) {
+    this.emitMapEvent($event.coords.lat, $event.coords.lng, false);
+  }
 
-  markerDragEnd(m: marker, $event: MouseEvent) {
-    console.log('dragEnd', m, $event);
+
+  private pushMarker(lati: number, langi: number, title: string, imgSrc: string) {
+    this.markers.push({
+      lat: lati,
+      lng: langi,
+      title: title,
+      img: imgSrc,
+      draggable: true
+    });
   }
 
 
 }
 
-// just an interface for type safety.
-interface marker {
-  lat: number;
-  lng: number;
-  title?: string;
-  img?: string;
-  draggable: boolean;
-}
-
-// just an interface for type safety.
-interface circle {
-  lat: number;
-  lng: number;
-}
 
 
