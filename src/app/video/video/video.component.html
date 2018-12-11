@@ -1,6 +1,5 @@
 <ul class="scrollableClass">
   <li *ngFor="let url of urls">
-    {{url}}
     <iframe [src]="url | safePipe" frameborder="0" allowfullscreen width="170" height="100"></iframe>
 
   </li>
