@@ -39,3 +39,14 @@ export interface Circle {
   lng: number;
 }
 
+export interface GenomicAnalysis {
+  url: string;
+  fullGenome: any;
+  topics?: (string)[] | null;
+  strongestGenes?: (string)[] | null;
+  languageFullName: string;
+  languageCode: string;
+  pornography: boolean;
+  offensiveLanguage: boolean;
+}
+

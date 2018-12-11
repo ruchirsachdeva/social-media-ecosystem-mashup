@@ -12,6 +12,7 @@ import { WikipediaComponent } from './wikipedia/wikipedia/wikipedia.component';
 import {EmbedVideo} from "ngx-embed-video/dist";
 import { VideoComponent } from './video/video/video.component';
 import { SafePipePipe } from './pipe/safe-pipe.pipe';
+import { GenomeComponent } from './genome/genome.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SafePipePipe } from './pipe/safe-pipe.pipe';
     CareerResultComponent,
     WikipediaComponent,
     VideoComponent,
-    SafePipePipe
+    SafePipePipe,
+    GenomeComponent
   ],
   imports: [
     BrowserModule,

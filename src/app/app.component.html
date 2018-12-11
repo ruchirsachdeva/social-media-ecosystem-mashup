@@ -1,7 +1,7 @@
 <div id="page-wrapper">
   <div id="page-middle-wrapper">
     <app-map
-      (mapEvent)="appWeather.getWeather($event);appCareer.setLocation($event);appWikipedia.setLocation($event);appVideo.getVideos($event)"></app-map>
+      (mapEvent)="appWeather.getWeather($event);appCareer.setLocation($event);appWikipedia.setLocation($event);appVideo.getVideos($event);appGenome.setLocation($event)"></app-map>
   </div>
 
   <div id="page-right-wrapper">
@@ -27,6 +27,10 @@
     <div class="row">
     <app-video #appVideo></app-video>
     </div>
+    <div class="row">
+      <app-genome #appGenome></app-genome>
+    </div>
+
   </div>
 
 </div>
