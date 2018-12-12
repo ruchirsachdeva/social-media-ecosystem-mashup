@@ -22,7 +22,7 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeather($event) {
-    this.weatherService.getWheather($event.lat,$event.long)
+    this.weatherService.getWheather($event.lat,$event.lng)
       .subscribe(
         data => {
           this.createWeatherForecasts(data);
