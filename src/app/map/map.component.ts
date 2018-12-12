@@ -15,16 +15,12 @@ export class MapComponent implements OnInit {
   DEFAULT_MAP_LAT = 56.8770413;
   DEFAULT_MAP_LNG = 14.8092744;
 
-  @ViewChild(AgmCircle) child;
-
   @Output() mapEvent = new EventEmitter();
 
   markers: Marker[] = [];
-  circle: Circle = null;
 
   preventSingleClick = false;
   timer: any;
-  delay: Number;
 
   constructor(private flickrService: FlickrService,
               public mapService: FourSquareService,) {
@@ -35,7 +31,6 @@ export class MapComponent implements OnInit {
   }
 
   initMapWithFlickr(lat: number, lng: number) {
-    this.circle = null;
     this.markers = [];
     //TODO get city name and load lat, lng Marker.
     lng = lng || 14.8092744;
@@ -51,22 +46,15 @@ export class MapComponent implements OnInit {
         },
         error => console.error(error)
       );
-    this.emitMapEvent(lat, lng, false);
+    this.emitMapEvent(lat, lng);
 
 
   }
 
-  private emitMapEvent(lat: number, lng: number, isCircle: boolean) {
+  private emitMapEvent(lat: number, lng: number) {
     this.mapService.getCity(lat, lng).subscribe(
       data => {
 
-        if (isCircle) {
-          this.circle = {
-            lat: lat,
-            lng: lng
-          };
-          this.markers = [];
-        }
 
         for (var venue of (<ForsquareData>data).response.venues) {
           if (venue.location.city) {
@@ -75,9 +63,7 @@ export class MapComponent implements OnInit {
               lng: lng,
               city: venue.location.city
             });
-            if (!isCircle) {
-              this.pushMarker(lat, lng, venue.location.city, venue.location.city);
-            }
+            this.pushMarker(lat, lng, venue.location.city, venue.location.city);
             break;
           }
         }
@@ -128,7 +114,7 @@ export class MapComponent implements OnInit {
 
 
   markerDragEnd(m: Marker, $event: MouseEvent) {
-    this.emitMapEvent($event.coords.lat, $event.coords.lng, false);
+    this.emitMapEvent($event.coords.lat, $event.coords.lng);
   }
 
 
