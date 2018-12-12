@@ -30,7 +30,7 @@
 }
 
 .scrollableClass {
-  height:350px;
+  height:450px;
   overflow-y: scroll;
 }
 
@@ -48,4 +48,12 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+#page-widget-wrapper {
+  border: 1px solid #DBDBDB;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 5px;
+  margin-bottom: 5px;
 }
