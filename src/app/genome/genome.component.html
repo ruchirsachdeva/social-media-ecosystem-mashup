@@ -1,10 +1,18 @@
 <h2>Genomic analyses</h2>
+<div *ngIf="showSpinner" class="spinner">
+  <!-- svg or gif of spinner  -->
+</div>
 <ul class="scrollableClass">
   <li *ngFor="let analysis of genomicAnalyses">
-    <h5>URL: {{analysis.url}}</h5>
-    <h5>GENES: {{analysis.topics}}</h5>
-    <h5>LANGUAGE: {{analysis.languageFullName}}</h5>
-    <h5>OFFENSIVE: {{analysis.offensiveLanguage}}</h5>
-    <h5>PORNOGRAPHY: {{analysis.pornography}}</h5>
+
+    <a href={{analysis.url}} target="_blank" style="display: block; text-decoration: none; margin-bottom: 20px;">
+      <h3>{{analysis.url}}</h3>
+      <h4 style="margin-top: 5px; margin-bottom: 10px; font-style: italic;">GENES: {{analysis.topics}}</h4>
+      <h5 style="margin-top: 5px; margin-bottom: 10px; font-style: italic;">LANGUAGE: {{analysis.languageFullName}}</h5>
+      <h5 style="margin-top: 5px; margin-bottom: 10px; font-style: italic;">OFFENSIVE: {{analysis.offensiveLanguage}}</h5>
+      <h5 style="margin-top: 5px; margin-bottom: 10px; font-style: italic;">PORNOGRAPHY: {{analysis.pornography}}</h5>
+    </a>
   </li>
 </ul>
+
+

@@ -9,6 +9,7 @@ import {GenomicAnalysis} from "../model/api";
 })
 export class GenomeComponent implements OnInit {
   public genomicAnalyses: GenomicAnalysis[] = [];
+  public showSpinner: boolean = false;
 
   constructor(public genomeService: GenomeService) { }
 
@@ -23,12 +24,22 @@ export class GenomeComponent implements OnInit {
   }
 
   private getGenomicAnalyses(city: string|any) {
+    this.showLoadingSpinner();
     this.genomeService.getGenomicAnalyses(city)
       .subscribe((response) => {
           this.genomicAnalyses = <GenomicAnalysis[]>response;
-          console.log(this.genomicAnalyses);
+          // response received so hide spinner now
+          this.hideLoadingSpinner();
         },
         error => console.error(error)
       );
+  }
+
+  showLoadingSpinner() {
+    this.showSpinner = true;
+  }
+
+  hideLoadingSpinner() {
+    this.showSpinner = false;
   }
 }
